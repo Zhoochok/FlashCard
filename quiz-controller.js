@@ -1,17 +1,26 @@
-// const inquirer = require('inquirer')
 const inquirer = require('inquirer');
-inquirer
-.prompt([
-{ type: 'input', name: 'username', message: 'Введи имя:' },
-{
-type: 'list',
-name: 'bonuses',
-message: 'На сколько ты опоздал?',
-choices: [
-{ name: 'Не опаздывал', value: 0 },
-{ name: 'На 2-3 минутки', value: 2 },
-{ name: 'Опоздал и не сообщил', value: 5 },
-],
-},
-])
-.then((answers) => console.log(answers));
+const fs = require('fs').promises;
+const { theme1, theme2 } = require('./quiz-model');
+
+async function start() {
+  await inquirer
+    .prompt([
+      {
+        type: 'list',
+        name: 'theme',
+        message: 'Выберите тему:',
+        choices: ['Memes', 'Song'],
+      },
+    ])
+    .then((themes) => {
+      if (themes.theme === 'Memes') {
+        theme1();
+      }
+      if (themes.theme === 'Song') {
+        theme2();
+      }
+    });
+}
+start();
+// console.clear()
+// start()
